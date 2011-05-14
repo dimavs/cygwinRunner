@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ProjectNameReplacing" default="convert">
+
+    <property name="original.name" value="cygwinRunner"/>
+    <property name="source.dir" value="${basedir}/.."/>
+
+    <!-- These should be set externally-->
+    <property name="new.name" value="PluginNameReadReadmeToChange"/>
+    <property name="target.dir" value="${new.name}"/>
+
+    <target name="check-target-dir-empty">
+        <mkdir dir="${target.dir}"/>
+        <fileset id="target.dir.files" dir="${target.dir}" includes="**"/>
+        <condition property="dir.not.empty">
+            <resourcecount refid="target.dir.files" when="greater" count="0"/>
+        </condition>
+
+        <fail if="dir.not.empty">Target directory "${target.dir}" is not empty.</fail>
+    </target>
+
+
+    <selector id="text.files">
+        <or>
+            <filename name="**/*.txt"/>
+            <filename name="**/*.xml"/>
+            <filename name="**/*.iml"/>
+            <filename name="**/*.ipr"/>
+            <filename name="**/*.properties"/>
+            <filename name="**/*.jsp"/>
+            <filename name="**/*.js"/>
+            <filename name="**/*.html"/>
+            <filename name="**/*.java"/>
+        </or>
+    </selector>
+
+    <selector id="ignore.files">
+        <or>
+            <filename name="generate/**"/>
+            <filename name="**/*.iws"/>
+        </or>
+    </selector>
+
+    <target name="convert" depends="check-target-dir-empty">
+
+        <typedef name="replacePreservingCase" classname="jetbrains.buildServer.templateGen.ReplacePreservingCaseFilter"
+                 classpath="generateAntUtil.jar"/>
+
+
+        <copy todir="${target.dir}">
+
+            <fileset dir="${source.dir}">
+                <and>
+                    <not>
+                        <selector refid="text.files"/>
+                    </not>
+                    <not>
+                        <selector refid="ignore.files"/>
+                    </not>
+                </and>
+            </fileset>
+            <filtermapper>
+                <tokenfilter>
+                    <replacePreservingCase from="${original.name}" to="${new.name}"/>
+                    <!--<replacestring from="${original.name}" to="${new.name}"/>-->
+                </tokenfilter>
+            </filtermapper>
+        </copy>
+
+        <copy todir="${target.dir}" overwrite="yes">
+            <fileset dir="${source.dir}">
+                <and>
+                    <selector refid="text.files"/>
+                    <not>
+                        <selector refid="ignore.files"/>
+                    </not>
+                </and>
+            </fileset>
+
+            <!--todo: support lowercased-->
+            <filtermapper>
+                <tokenfilter>
+                    <replacePreservingCase from="${original.name}" to="${new.name}"/>
+                    <!--<replacestring from="${original.name}" to="${new.name}"/>-->
+                </tokenfilter>
+            </filtermapper>
+
+            <filterchain>
+                <!--todo: support lowercased-->
+                <tokenfilter>
+                    <replacePreservingCase from="${original.name}" to="${new.name}"/>
+                    <!--<replacestring from="${original.name}" to="${new.name}"/>-->
+                </tokenfilter>
+            </filterchain>
+        </copy>
+
+    </target>
+
+</project>
