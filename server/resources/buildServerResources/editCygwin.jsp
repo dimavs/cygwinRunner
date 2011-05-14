@@ -16,14 +16,14 @@
 
 <forms:workingDirectory/>
 
-<tr id="cygwin_script_code">
+<tr>
     <th><label for="${bean.codeValue}">Bash script:</label></th>
     <td>
         <props:multilineProperty name="${bean.codeValue}"
-                                 linkTitle="Enter bash script content" 
-                                 cols="58" rows="10" 
-                                 expanded="${true}" />
-        <span class="smallNote">TeamCity references will be replaced in the code</span>
+                                 linkTitle="Enter bash script" 
+                                 cols="58" rows="20" 
+                                 expanded="${true}"/>
+        <span class="smallNote">Enter bash script. TeamCity references will be replaced in the code</span>
         <span class="error" id="error_${bean.codeValue}"></span>
     </td>
 </tr>                                                                                                             </tr>
