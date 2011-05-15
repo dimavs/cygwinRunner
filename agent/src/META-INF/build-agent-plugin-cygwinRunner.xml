@@ -9,8 +9,6 @@
                            http://www.springframework.org/schema/lang/spring-lang-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        default-autowire="constructor">
 
-    <bean class="cygwinRunner.agent.CygwinInfoProvider" />
-    <bean class="cygwinRunner.agent.CygwinDetector" />
     <bean class="cygwinRunner.agent.CygwinServiceFactory" />
 
 </beans>

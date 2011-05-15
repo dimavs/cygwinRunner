@@ -11,15 +11,15 @@ import cygwinRunner.common.Util;
 
 public class CygwinServiceFactory implements CommandLineBuildServiceFactory, AgentBuildRunnerInfo {
     private static final Logger LOG = Logger.getInstance(CygwinServiceFactory.class.getName());
-    private final CygwinInfoProvider myInfo;
+    //private final CygwinInfoProvider myInfo;
 
-    public CygwinServiceFactory(@NotNull final CygwinInfoProvider info) {
-        myInfo = info;
+    public CygwinServiceFactory(/*@NotNull final CygwinInfoProvider info*/) {
+        //myInfo = info;
     }
 
     @NotNull
     public CommandLineBuildService createService() {
-        return new CygwinService(myInfo);
+        return new CygwinService(/*myInfo*/);
     }
 
     @NotNull
@@ -33,10 +33,10 @@ public class CygwinServiceFactory implements CommandLineBuildServiceFactory, Age
     }
 
     public boolean canRun(@NotNull final BuildAgentConfiguration agentConfiguration) {
-        if (myInfo.getCygwin() == null) {
-            LOG.info("Cygwin runner is disabled: Cygwin was not found.");
-            return false;
-        }
+        //if (myInfo.getCygwin() == null) {
+        //    LOG.info("Cygwin runner is disabled: Cygwin was not found.");
+        //    return false;
+        //}
 
         return true;
     }

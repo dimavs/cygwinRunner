@@ -21,7 +21,7 @@
     <td>
         <props:multilineProperty name="${bean.codeValue}"
                                  linkTitle="Enter bash script" 
-                                 cols="58" rows="20" 
+                                 cols="58" rows="10" 
                                  expanded="${true}"/>
         <span class="smallNote">Enter bash script. TeamCity references will be replaced in the code</span>
         <span class="error" id="error_${bean.codeValue}"></span>
