@@ -11,6 +11,7 @@ import jetbrains.buildServer.util.StringUtil;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import cygwinRunner.common.Util;
 
@@ -24,6 +25,12 @@ public class CygwinService extends BuildServiceAdapter {
     @NotNull
     @Override
     public ProgramCommandLine makeProgramCommandLine() throws RunBuildException {
+        Map<String, String> map = getBuildParameters().getEnvironmentVariables();
+
+        // add CYGWIN variable
+        if (!map.containsKey("CYGWIN"))
+            getAgentConfiguration().addEnvironmentVariable("CYGWIN", "nodosfilewarning");
+        
         return createProgramCommandline(selectCmd(), getCmdArguments());
     }
 
@@ -56,6 +63,9 @@ public class CygwinService extends BuildServiceAdapter {
             final File code = FileUtil.createTempFile(getBuildTempDirectory(), "cygwin", ".bash", true);
             OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream(code), "utf-8");
             handle = w;
+
+            // fix PATH
+            text = "PATH=$PATH:/usr/bin\n" + text;
             w.write(text);
 
             return code;
